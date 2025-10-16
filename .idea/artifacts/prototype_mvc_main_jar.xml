@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="prototype-mvc-main:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/prototype_mvc_main_jar</output-path>
+    <root id="archive" name="prototype-mvc-main.jar">
+      <element id="module-output" name="FFBSQ" />
+    </root>
+  </artifact>
+</component>

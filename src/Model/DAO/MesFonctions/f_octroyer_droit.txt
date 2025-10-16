@@ -1,0 +1,17 @@
+CREATE OR REPLACE FUNCTION f_octroyer_droit(varchar(15), integer) RETURNS void AS
+$$
+DECLARE
+	type_option option.type_option%type;
+	
+BEGIN
+	select option.type_option into type_option 
+	from option
+	where id_option = $2;
+	
+	if (type_option = 'C') then
+		insert into autoriser_option_commercial values ($1, $2);
+	else
+		insert into autoriser_option_demenageur values ($1, $2);
+	end if;
+END;
+$$ LANGUAGE plpgsql;

@@ -102,7 +102,7 @@ public class VueListerEmploye extends AbstractVuePersonnalisable {
         this.lbl_type_utilisateur = new JLabel("Type empl : ");
         this.jcb_type_utilisateur = new JComboBox<>();
         this.jcb_type_utilisateur.setPreferredSize(new Dimension(200, 30));
-        this.btn_save = new JButton("Enregistrer e");
+        this.btn_save = new JButton("Enregistrer");
         this.btn_cancel = new JButton("Annuler");
         this.btn_save.setPreferredSize(new Dimension(120, 28));
         this.btn_cancel.setPreferredSize(new Dimension(120, 28));

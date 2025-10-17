@@ -80,7 +80,7 @@ FFBSQ/
 ## 🚀 Installation & Exécution sous **Eclipse**
 
 ### 1️⃣ Prérequis
-- **Posédé un IDE comme IntelliJ, Eclipse, etc.
+- **Posédé un IDE** comme IntelliJ, Eclipse, etc.
 - **Installer Java JDK** (vérifier avec `java -version`)
 - **S'assurer que le driver ODBC est bien configuré** sur votre machine.
 

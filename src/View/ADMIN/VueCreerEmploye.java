@@ -184,42 +184,39 @@ public void initComponents() {
         u.setPseudo_utilisateur(pseudo);
         // On demande au controleur si la connexion a la BD a été faite avec succès
         if (this.controler.connectionValid()) {
+            // verification des divers champs si valide ou non null
             if (nss.isEmpty() || nom.isEmpty() || prenom.isEmpty() || pseudo.isEmpty() ||
                     mdp.isEmpty() || mdpConf.isEmpty() || tel.isEmpty() || mail.isEmpty()) {
 
                 new VueMessage(null, new Dimension(320, 80), "Erreur", "Veuillez remplir tous les champs.", RED, true);
                 return;
             }
+            // verification si l'utilisateur déjà présent
             if (this.controler.exist(u)) {
                 new VueMessage(null, new Dimension(320, 80), "Erreur", "Utilisateur déjà crée", RED, true);
                 return;
             }
-
+            // verification si mdp & mdpConf sont les mêmes
             if(!(mdp.equals(mdpConf))) {
                 new VueMessage(null, new Dimension(320, 80), "Erreur", "Les mots de passes ne sont pas identiques", RED, true);
                 return;
             }
-
+            // création de l'utilisateur
             Resultat resultatUtilisateur = this.controler.insertinto(new Utilisateur(nss, nom, prenom, pseudo, mdp, tel, mail));
-
+            // verification si la requête a fonctionné
             if (!resultatUtilisateur.isSucces()) {
                 new VueMessage(null, new Dimension(320, 80), "Erreur", "Soucis pendant la création de l'utilisateur", RED, true);
                 return;
             }
-
+            // création de l'employé
             Resultat resultatEmploye = this.controler.insertinto(new Employe(nss, typeEmploye.getId_type_employe()));
-
-            if (resultatEmploye == null) {
-                new VueMessage(null, new Dimension(320, 80), "Erreur", "Impossible de créer l'employé : vérifier la connexion à la BD ou les permissions", RED, true);
-                return;
-            }
-
+            // verification si la requête a fonctionné
             if(resultatEmploye.isSucces()) {
 
                 JOptionPane.showMessageDialog(this, "Création de l'utilisateur avec succès",
-                        "ERROR",
+                        "Information",
                         JOptionPane.INFORMATION_MESSAGE);
-
+                // reset des champs
                 this.jtf_id_utilisateur.setText("");
                 this.jtf_nom_utilisateur.setText("");
                 this.jtf_prenom_utilisateur.setText("");

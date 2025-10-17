@@ -107,7 +107,7 @@ public class VueListerEmploye extends AbstractVuePersonnalisable {
         this.btn_save.setPreferredSize(new Dimension(120, 28));
         this.btn_cancel.setPreferredSize(new Dimension(120, 28));
 
-        this.lbl_lister_employe = new JLabel("Liste d'employés e");
+        this.lbl_lister_employe = new JLabel("Liste d'employés");
 
         Resultat r = this.controler.select(new TypeEmploye());
 

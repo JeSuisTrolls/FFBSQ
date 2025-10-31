@@ -81,34 +81,37 @@ public VueCreerEmploye(JFrame parent,
 public void initComponents() {
 
     this.lbl_id_utilisateur = new JLabel("N.S. : ");
-    this.jtf_id_utilisateur = new JTextField();
-    this.jtf_id_utilisateur.setPreferredSize(new Dimension(200, 30));
-    this.lbl_prenom_utilisateur = new JLabel("Prénom : ");
-    this.jtf_prenom_utilisateur = new JTextField();
-    this.jtf_prenom_utilisateur.setPreferredSize(new Dimension(200, 30));
     this.lbl_nom_utilisateur = new JLabel("Nom : ");
-    this.jtf_nom_utilisateur = new JTextField();
-    this.jtf_nom_utilisateur.setPreferredSize(new Dimension(200, 30));
+    this.lbl_prenom_utilisateur = new JLabel("Prénom : ");
     this.lbl_pseudo_utilisateur = new JLabel("Pseudo : ");
-    this.jtf_pseudo_utilisateur = new JTextField();
-    this.jtf_pseudo_utilisateur.setPreferredSize(new Dimension(200, 30));
     this.lbl_mdp_utilisateur = new JLabel("M. de passe : ");
-    this.jpf_mdp_utilisateur = new JPasswordField();
-    this.jpf_mdp_utilisateur.setPreferredSize(new Dimension(175, 30));
     this.lbl_mdp_confirmation_utilisateur = new JLabel("Conf. Mdp : ");
-    this.jpf_mdp_confirmation_utilisateur = new JPasswordField();
-    this.jpf_mdp_confirmation_utilisateur.setPreferredSize(new Dimension(175, 30));
     this.lbl_cell_utilisateur = new JLabel("Téléphone : ");
-    this.jtf_cell_utilisateur = new JTextField();
-    this.jtf_cell_utilisateur.setPreferredSize(new Dimension(200, 30));
     this.lbl_mail_utilisateur = new JLabel("E-mail : ");
-    this.jtf_mail_utilisateur = new JTextField();
-    this.jtf_mail_utilisateur.setPreferredSize(new Dimension(200, 30));
     this.lbl_type_utilisateur = new JLabel("Type empl : ");
+
+    this.jtf_id_utilisateur = new JTextField();
+    this.jtf_prenom_utilisateur = new JTextField();
+    this.jtf_nom_utilisateur = new JTextField();
+    this.jtf_pseudo_utilisateur = new JTextField();
+    this.jpf_mdp_utilisateur = new JPasswordField();
+    this.jpf_mdp_confirmation_utilisateur = new JPasswordField();
+    this.jtf_cell_utilisateur = new JTextField();
+    this.jtf_mail_utilisateur = new JTextField();
     this.jcb_type_utilisateur = new JComboBox<>();
-    this.jcb_type_utilisateur.setPreferredSize(new Dimension(200, 30));
+
     this.btn_save = new JButton("Enregistrer");
     this.btn_cancel = new JButton("Annuler");
+
+    this.jtf_id_utilisateur.setPreferredSize(new Dimension(200, 30));
+    this.jtf_prenom_utilisateur.setPreferredSize(new Dimension(200, 30));
+    this.jtf_nom_utilisateur.setPreferredSize(new Dimension(200, 30));
+    this.jtf_pseudo_utilisateur.setPreferredSize(new Dimension(200, 30));
+    this.jpf_mdp_utilisateur.setPreferredSize(new Dimension(175, 30));
+    this.jpf_mdp_confirmation_utilisateur.setPreferredSize(new Dimension(175, 30));
+    this.jtf_cell_utilisateur.setPreferredSize(new Dimension(200, 30));
+    this.jtf_mail_utilisateur.setPreferredSize(new Dimension(200, 30));
+    this.jcb_type_utilisateur.setPreferredSize(new Dimension(200, 30));
     this.btn_save.setPreferredSize(new Dimension(120, 28));
     this.btn_cancel.setPreferredSize(new Dimension(120, 28));
     // this.controler.select(null); faire en sorte que la classe DAO ne puisse pas prendre de null ou autre

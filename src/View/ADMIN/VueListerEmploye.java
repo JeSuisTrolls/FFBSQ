@@ -16,7 +16,6 @@ import Model.Classes.Autres.MonDefaultTableModel;
 import Model.Classes.Metiers.Employe;
 import Model.Classes.Metiers.Resultat;
 import Model.Classes.Metiers.TypeEmploye;
-import Model.Classes.Metiers.Utilisateur;
 import View.Abstracts.AbstractVuePersonnalisable;
 import View.VueMessage;
 
@@ -49,28 +48,23 @@ public class VueListerEmploye extends AbstractVuePersonnalisable {
     private JTextField jtf_cell_utilisateur;
     private JTextField jtf_mail_utilisateur;
 
-    // ComboBox
     private JComboBox<TypeEmploye> jcb_type_utilisateur;
 
-    // Boutons
     private JButton btn_update;
     private JButton btn_delete;
     private JButton btn_cancel;
 
-    // Liste et Table
     private JList<String> jlist_employes;
     private DefaultListModel<String> listModel;
     private MonDefaultTableModel tableModel;
     private JTable jtable_employes;
     private JScrollPane scrollPane;
 
-    // Panels
     private JPanel jp_info_employe;
     private JPanel jp_lister_employe;
     private JPanel jp_filtre;
     private JPanel jp_buttons;
 
-    // Données
     private ResultSet resultSetEmployes;
     private Employe employeSelectionne;
 
@@ -89,26 +83,18 @@ public class VueListerEmploye extends AbstractVuePersonnalisable {
     public void initComponents() {
         this.setLayout(new BorderLayout(10, 10));
 
-        // Initialisation des labels
         this.lbl_filtre = new JLabel("Filtrer : ");
         this.lbl_id_utilisateur = new JLabel("N.S. : ");
-<<<<<<< HEAD
         this.lbl_prenom_utilisateur = new JLabel("Prénom : ");
         this.lbl_nom_utilisateur = new JLabel("Nom : ");
-=======
-        this.lbl_nom_utilisateur = new JLabel("Nom : ");
-        this.lbl_prenom_utilisateur = new JLabel("Prénom : ");
->>>>>>> 73dac4ce5f9e9fb57811b56bb21c948959f4e3a0
         this.lbl_pseudo_utilisateur = new JLabel("Pseudo : ");
         this.lbl_mdp_utilisateur = new JLabel("M. de passe : ");
         this.lbl_mdp_confirmation_utilisateur = new JLabel("Conf. Mdp : ");
         this.lbl_cell_utilisateur = new JLabel("Téléphone : ");
         this.lbl_mail_utilisateur = new JLabel("E-mail : ");
-<<<<<<< HEAD
         this.lbl_type_utilisateur = new JLabel("Type empl. : ");
         this.lbl_liste_employes = new JLabel("Liste d'employés :");
 
-        // Initialisation des champs de texte
         this.jtf_filtre = new JTextField();
         this.jtf_filtre.setPreferredSize(new Dimension(350, 30));
 
@@ -137,17 +123,14 @@ public class VueListerEmploye extends AbstractVuePersonnalisable {
         this.jtf_mail_utilisateur = new JTextField();
         this.jtf_mail_utilisateur.setPreferredSize(new Dimension(200, 30));
 
-        // Initialisation du ComboBox
         this.jcb_type_utilisateur = new JComboBox<>();
         this.jcb_type_utilisateur.setPreferredSize(new Dimension(200, 30));
 
-        // Charger les types d'employés
         Resultat resultat = this.controler.select(new TypeEmploye());
         if(resultat.isSucces()) {
             this.setValuesJCB(resultat.getReponse(), this.jcb_type_utilisateur, new TypeEmploye());
         }
 
-        // Initialisation des boutons
         this.btn_update = new JButton("M.A.J.");
         this.btn_update.setPreferredSize(new Dimension(120, 28));
         this.btn_update.addActionListener(this);
@@ -160,53 +143,12 @@ public class VueListerEmploye extends AbstractVuePersonnalisable {
 
         this.btn_cancel = new JButton("Annuler");
         this.btn_cancel.setPreferredSize(new Dimension(120, 28));
-=======
-        this.lbl_type_utilisateur = new JLabel("Type empl : ");
-
-        this.jtf_id_utilisateur = new JTextField();
-        this.jtf_prenom_utilisateur = new JTextField();
-        this.jtf_nom_utilisateur = new JTextField();
-        this.jtf_pseudo_utilisateur = new JTextField();
-        this.jpf_mdp_utilisateur = new JPasswordField();
-        this.jpf_mdp_confirmation_utilisateur = new JPasswordField();
-        this.jtf_cell_utilisateur = new JTextField();
-        this.jtf_mail_utilisateur = new JTextField();
-        this.jcb_type_utilisateur = new JComboBox<>();
-
-        this.btn_save = new JButton("Enregistrer");
-        this.btn_cancel = new JButton("Annuler");
-
-        this.jtf_id_utilisateur.setPreferredSize(new Dimension(200, 30));
-        this.jtf_prenom_utilisateur.setPreferredSize(new Dimension(200, 30));
-        this.jtf_nom_utilisateur.setPreferredSize(new Dimension(200, 30));
-        this.jtf_pseudo_utilisateur.setPreferredSize(new Dimension(200, 30));
-        this.jpf_mdp_utilisateur.setPreferredSize(new Dimension(175, 30));
-        this.jpf_mdp_confirmation_utilisateur.setPreferredSize(new Dimension(175, 30));
-        this.jtf_cell_utilisateur.setPreferredSize(new Dimension(200, 30));
-        this.jtf_mail_utilisateur.setPreferredSize(new Dimension(200, 30));
-        this.jcb_type_utilisateur.setPreferredSize(new Dimension(200, 30));
-
-        this.btn_save.setPreferredSize(new Dimension(120, 28));
-        this.btn_cancel.setPreferredSize(new Dimension(120, 28));
-
-        this.lbl_lister_employe = new JLabel("Liste d'employés");
-
-        Resultat r = this.controler.select(new TypeEmploye());
-
-        this.setValuesJCB(r.getReponse(), this.jcb_type_utilisateur, new TypeEmploye());
-        this.jp_info_employe = new JPanel();
-        this.jp_lister_employer = new JPanel();
-
-        this.btn_save.addActionListener(this);
->>>>>>> 73dac4ce5f9e9fb57811b56bb21c948959f4e3a0
         this.btn_cancel.addActionListener(this);
 
-        // Panel de filtre
         this.jp_filtre = new JPanel();
         this.jp_filtre.add(this.lbl_filtre);
         this.jp_filtre.add(this.jtf_filtre);
 
-        // Ajouter listener pour le filtre
         this.jtf_filtre.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -214,7 +156,6 @@ public class VueListerEmploye extends AbstractVuePersonnalisable {
             }
         });
 
-        // Panel de la liste des employés
         this.jp_lister_employe = new JPanel();
         this.jp_lister_employe.setLayout(new BorderLayout(5, 5));
         this.jp_lister_employe.setPreferredSize(new Dimension(450, 600));
@@ -224,7 +165,6 @@ public class VueListerEmploye extends AbstractVuePersonnalisable {
         this.jlist_employes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.jlist_employes.setFont(new Font("Monospaced", Font.PLAIN, 12));
 
-        // Ajouter listener pour la sélection
         this.jlist_employes.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -272,24 +212,18 @@ public class VueListerEmploye extends AbstractVuePersonnalisable {
         this.jp_info_employe.add(this.lbl_type_utilisateur);
         this.jp_info_employe.add(this.jcb_type_utilisateur);
 
-        // Panel des boutons
         this.jp_buttons = new JPanel();
         this.jp_buttons.add(this.btn_update);
         this.jp_buttons.add(this.btn_delete);
         this.jp_buttons.add(this.btn_cancel);
 
-        // Assemblage final
         this.add(this.jp_filtre, BorderLayout.NORTH);
         this.add(this.jp_lister_employe, BorderLayout.WEST);
         this.add(this.jp_info_employe, BorderLayout.CENTER);
         this.add(this.jp_buttons, BorderLayout.SOUTH);
 
-<<<<<<< HEAD
         this.setButtonSubmit(btn_update);
     }
-=======
-        this.getContentPane().add(this.jp_info_employe);
->>>>>>> 73dac4ce5f9e9fb57811b56bb21c948959f4e3a0
 
     private void chargerEmployes() {
         Resultat resultat = this.controler.selectAll(new Employe());
@@ -300,7 +234,6 @@ public class VueListerEmploye extends AbstractVuePersonnalisable {
             return;
         }
 
-<<<<<<< HEAD
         this.resultSetEmployes = resultat.getReponse();
         this.listModel.clear();
 
@@ -314,7 +247,6 @@ public class VueListerEmploye extends AbstractVuePersonnalisable {
                 this.listModel.addElement(ligne);
             }
 
-            // Repositionner le curseur au début
             if (this.resultSetEmployes.first()) {
                 this.resultSetEmployes.beforeFirst();
             }
@@ -406,7 +338,6 @@ public class VueListerEmploye extends AbstractVuePersonnalisable {
                     this.jtf_cell_utilisateur.setText(tel);
                     this.jtf_mail_utilisateur.setText(mail);
 
-                    // Sélectionner le type d'employé
                     for (int i = 0; i < this.jcb_type_utilisateur.getItemCount(); i++) {
                         TypeEmploye te = this.jcb_type_utilisateur.getItemAt(i);
                         if (te.getId_type_employe().equals(idTypeEmploye)) {
@@ -444,11 +375,6 @@ public class VueListerEmploye extends AbstractVuePersonnalisable {
         this.jtf_mail_utilisateur.setText("");
         this.jcb_type_utilisateur.setSelectedIndex(0);
         this.employeSelectionne = null;
-=======
-        this.getContentPane().add(this.jp, BorderLayout.CENTER);
-
-
->>>>>>> 73dac4ce5f9e9fb57811b56bb21c948959f4e3a0
     }
 
     @Override

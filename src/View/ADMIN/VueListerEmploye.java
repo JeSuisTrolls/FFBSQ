@@ -99,7 +99,6 @@ public class VueListerEmploye extends AbstractVuePersonnalisable {
             }
         });
 
-        // ===== PANEL LISTE EMPLOYES (LEFT) =====
         this.lbl_liste_employes = new JLabel("Liste d'employés :");
         this.listModel = new DefaultListModel<>();
         this.jlist_employes = new JList<>(this.listModel);
@@ -196,12 +195,10 @@ public class VueListerEmploye extends AbstractVuePersonnalisable {
         this.jp_info_employe.add(this.lbl_type_utilisateur);
         this.jp_info_employe.add(this.jcb_type_utilisateur);
 
-        // ===== PANEL CENTER (contient liste + infos) =====
         this.jp_center = new JPanel(new BorderLayout(10, 10));
         this.jp_center.add(this.jp_lister_employe, BorderLayout.WEST);
         this.jp_center.add(this.jp_info_employe, BorderLayout.CENTER);
 
-        // ===== PANEL BOUTONS (SOUTH) =====
         this.btn_update = new JButton("M.A.J.");
         this.btn_update.setPreferredSize(new Dimension(120, 28));
         this.btn_update.addActionListener(this);
@@ -240,14 +237,16 @@ public class VueListerEmploye extends AbstractVuePersonnalisable {
 
         this.resultSetEmployes = resultat.getReponse();
         this.listModel.clear();
+        viderFormulaire();
+        this.btn_update.setEnabled(false);
+        this.btn_delete.setEnabled(false);
 
         try {
             while (this.resultSetEmployes.next()) {
-                String nss = this.resultSetEmployes.getString("id_utilisateur");
                 String nom = this.resultSetEmployes.getString("nom_utilisateur");
                 String prenom = this.resultSetEmployes.getString("prenom_utilisateur");
 
-                String ligne = String.format("%-15s %s %s", nss, prenom, nom);
+                String ligne = String.format("%s %s", nom, prenom);
                 this.listModel.addElement(ligne);
             }
 
@@ -266,6 +265,9 @@ public class VueListerEmploye extends AbstractVuePersonnalisable {
         String filtre = this.jtf_filtre.getText().toLowerCase().trim();
 
         this.listModel.clear();
+        viderFormulaire();
+        this.btn_update.setEnabled(false);
+        this.btn_delete.setEnabled(false);
 
         if (filtre.isEmpty()) {
             chargerEmployes();
@@ -281,10 +283,11 @@ public class VueListerEmploye extends AbstractVuePersonnalisable {
                 String prenom = this.resultSetEmployes.getString("prenom_utilisateur");
                 String pseudo = this.resultSetEmployes.getString("pseudo_utilisateur");
 
+                // Créer une chaîne avec tous les critères de recherche
                 String recherche = (nss + " " + nom + " " + prenom + " " + pseudo).toLowerCase();
 
                 if (recherche.contains(filtre)) {
-                    String ligne = String.format("%-15s %s %s", nss, prenom, nom);
+                    String ligne = String.format("%s %s", prenom, nom);
                     this.listModel.addElement(ligne);
                 }
             }
@@ -305,34 +308,30 @@ public class VueListerEmploye extends AbstractVuePersonnalisable {
         }
 
         try {
+            String filtre = this.jtf_filtre.getText().toLowerCase().trim();
             this.resultSetEmployes.beforeFirst();
             int currentIndex = 0;
 
             while (this.resultSetEmployes.next()) {
-                String filtre = this.jtf_filtre.getText().toLowerCase().trim();
+                String nss = this.resultSetEmployes.getString("id_utilisateur");
+                String nom = this.resultSetEmployes.getString("nom_utilisateur");
+                String prenom = this.resultSetEmployes.getString("prenom_utilisateur");
+                String pseudo = this.resultSetEmployes.getString("pseudo_utilisateur");
+                String recherche = (nss + " " + nom + " " + prenom + " " + pseudo).toLowerCase();
 
-                if (!filtre.isEmpty()) {
-                    String nss = this.resultSetEmployes.getString("id_utilisateur");
-                    String nom = this.resultSetEmployes.getString("nom_utilisateur");
-                    String prenom = this.resultSetEmployes.getString("prenom_utilisateur");
-                    String pseudo = this.resultSetEmployes.getString("pseudo_utilisateur");
-                    String recherche = (nss + " " + nom + " " + prenom + " " + pseudo).toLowerCase();
-
-                    if (!recherche.contains(filtre)) {
-                        continue;
-                    }
+                // Sauter les employés qui ne correspondent pas au filtre
+                if (!filtre.isEmpty() && !recherche.contains(filtre)) {
+                    continue;
                 }
 
+                // Si c'est l'employé sélectionné
                 if (currentIndex == index) {
-                    String nss = this.resultSetEmployes.getString("id_utilisateur");
-                    String nom = this.resultSetEmployes.getString("nom_utilisateur");
-                    String prenom = this.resultSetEmployes.getString("prenom_utilisateur");
-                    String pseudo = this.resultSetEmployes.getString("pseudo_utilisateur");
                     String mdp = this.resultSetEmployes.getString("mdp_utilisateur");
                     String tel = this.resultSetEmployes.getString("tel_utilisateur");
                     String mail = this.resultSetEmployes.getString("mail_utilisateur");
                     String idTypeEmploye = this.resultSetEmployes.getString("id_type_employe");
 
+                    // Remplir les champs
                     this.jtf_id_utilisateur.setText(nss);
                     this.jtf_nom_utilisateur.setText(nom);
                     this.jtf_prenom_utilisateur.setText(prenom);
@@ -342,6 +341,7 @@ public class VueListerEmploye extends AbstractVuePersonnalisable {
                     this.jtf_cell_utilisateur.setText(tel);
                     this.jtf_mail_utilisateur.setText(mail);
 
+                    // Sélectionner le bon type d'employé
                     for (int i = 0; i < this.jcb_type_utilisateur.getItemCount(); i++) {
                         TypeEmploye te = this.jcb_type_utilisateur.getItemAt(i);
                         if (te.getId_type_employe().equals(idTypeEmploye)) {
@@ -350,11 +350,12 @@ public class VueListerEmploye extends AbstractVuePersonnalisable {
                         }
                     }
 
+                    // Créer l'objet employé sélectionné
                     this.employeSelectionne = new Employe(nss, nom, prenom, pseudo, mdp, tel, mail, idTypeEmploye);
 
+                    // Activer les boutons de modification/suppression
                     this.btn_update.setEnabled(true);
                     this.btn_delete.setEnabled(true);
-
                     break;
                 }
 

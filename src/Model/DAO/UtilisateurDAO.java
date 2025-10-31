@@ -285,14 +285,25 @@ public class UtilisateurDAO extends AbstractCRUD
 
 	@Override
 	public Resultat selectAll(Object obj) {
-		// TODO Auto-generated method stub
-		return null;
+		if(obj instanceof Utilisateur) {
+			String requete = "SELECT U.id_utilisateur, U.nom_utilisateur, U.prenom_utilisateur, " +
+					"U.pseudo_utilisateur, U.mdp_utilisateur, U.tel_utilisateur, " +
+					"U.mail_utilisateur, E.id_type_employe, T.libelle_type_employe " +
+					"FROM UTILISATEUR U " +
+					"INNER JOIN EMPLOYE E ON U.id_utilisateur = E.id_employe " +
+					"INNER JOIN TYPE_EMPLOYE T ON E.id_type_employe = T.id_type_employe " +
+					"ORDER BY U.nom_utilisateur, U.prenom_utilisateur";
+
+			this.setRequete(requete);
+			this.prepare();
+			return this.execute();
+		}
+		return new Resultat("Mauvais type objet", false, null);
 	}
 
 	@Override
 	public Resultat selectAllInfo(Object obj) {
-		// TODO Auto-generated method stub
-		return null;
+		return selectAll(obj);
 	}
 
 }

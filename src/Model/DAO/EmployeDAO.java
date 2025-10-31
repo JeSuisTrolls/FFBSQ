@@ -50,12 +50,105 @@ public class EmployeDAO extends AbstractCRUD
 
     @Override
     public Resultat deletefrom(Object obj) {
-        return null;
+        if(obj instanceof Employe) {
+            // D'abord supprimer de la table EMPLOYE
+            String requete = "DELETE FROM EMPLOYE WHERE id_employe = ?";
+            this.setRequete(requete);
+
+            ArrayList<String> listValeurs = new ArrayList<String>();
+            listValeurs.add(((Employe) obj).getNumero_securite_social_utilisateur());
+
+            ArrayList<String> listTypes = new ArrayList<>();
+            listTypes.add("STRING");
+
+            this.setListValeurs(listValeurs);
+            this.setListTypes(listTypes);
+
+            this.prepare();
+            Resultat resultatEmploye = this.execute();
+
+            if (!resultatEmploye.isSucces()) {
+                return resultatEmploye;
+            }
+
+            // Ensuite supprimer de la table UTILISATEUR
+            requete = "DELETE FROM UTILISATEUR WHERE id_utilisateur = ?";
+            this.setRequete(requete);
+            this.setListValeurs(listValeurs);
+            this.setListTypes(listTypes);
+
+            this.prepare();
+            return this.execute();
+        }
+        return new Resultat("Mauvais type objet", false, null);
     }
 
     @Override
     public Resultat update(Object newObj, Object oldObj) {
-        return null;
+        if(newObj instanceof Employe && oldObj instanceof Employe) {
+            Employe newEmploye = (Employe) newObj;
+            Employe oldEmploye = (Employe) oldObj;
+
+            // Mise à jour de l'utilisateur
+            String requete = "UPDATE UTILISATEUR SET " +
+                    "nom_utilisateur = ?, " +
+                    "prenom_utilisateur = ?, " +
+                    "pseudo_utilisateur = ?, " +
+                    "mdp_utilisateur = ?, " +
+                    "tel_utilisateur = ?, " +
+                    "mail_utilisateur = ? " +
+                    "WHERE id_utilisateur = ?";
+
+            this.setRequete(requete);
+
+            ArrayList<String> listValeurs = new ArrayList<String>();
+            listValeurs.add(newEmploye.getNom_utilisateur());
+            listValeurs.add(newEmploye.getPrenom_utilisateur());
+            listValeurs.add(newEmploye.getPseudo_utilisateur());
+            listValeurs.add(newEmploye.getMdp_utilisateur());
+            listValeurs.add(newEmploye.getTel_utilisateur());
+            listValeurs.add(newEmploye.getMail_utilisateur());
+            listValeurs.add(oldEmploye.getNumero_securite_social_utilisateur());
+
+            ArrayList<String> listTypes = new ArrayList<>();
+            listTypes.add("STRING");
+            listTypes.add("STRING");
+            listTypes.add("STRING");
+            listTypes.add("STRING");
+            listTypes.add("STRING");
+            listTypes.add("STRING");
+            listTypes.add("STRING");
+
+            this.setListValeurs(listValeurs);
+            this.setListTypes(listTypes);
+
+            this.prepare();
+            Resultat resultatUtilisateur = this.execute();
+
+            if (!resultatUtilisateur.isSucces()) {
+                return resultatUtilisateur;
+            }
+
+            // Mise à jour de l'employé
+            requete = "UPDATE EMPLOYE SET id_type_employe = ? WHERE id_employe = ?";
+
+            this.setRequete(requete);
+
+            listValeurs = new ArrayList<String>();
+            listValeurs.add(newEmploye.getId_type_employe());
+            listValeurs.add(oldEmploye.getNumero_securite_social_utilisateur());
+
+            listTypes = new ArrayList<>();
+            listTypes.add("STRING");
+            listTypes.add("STRING");
+
+            this.setListValeurs(listValeurs);
+            this.setListTypes(listTypes);
+
+            this.prepare();
+            return this.execute();
+        }
+        return new Resultat("Mauvais type objet", false, null);
     }
 
     @Override
@@ -65,12 +158,25 @@ public class EmployeDAO extends AbstractCRUD
 
     @Override
     public Resultat selectAll(Object obj) {
-        return null;
+        if(obj instanceof Employe) {
+            String requete = "SELECT U.id_utilisateur, U.nom_utilisateur, U.prenom_utilisateur, " +
+                    "U.pseudo_utilisateur, U.mdp_utilisateur, U.tel_utilisateur, " +
+                    "U.mail_utilisateur, E.id_type_employe, T.libelle_type_employe " +
+                    "FROM UTILISATEUR U " +
+                    "INNER JOIN EMPLOYE E ON U.id_utilisateur = E.id_employe " +
+                    "INNER JOIN TYPE_EMPLOYE T ON E.id_type_employe = T.id_type_employe " +
+                    "ORDER BY U.nom_utilisateur, U.prenom_utilisateur";
+
+            this.setRequete(requete);
+            this.prepare();
+            return this.execute();
+        }
+        return new Resultat("Mauvais type objet", false, null);
     }
 
     @Override
     public Resultat selectAllInfo(Object obj) {
-        return null;
+        return selectAll(obj);
     }
 
     @Override

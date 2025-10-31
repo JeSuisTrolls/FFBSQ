@@ -44,9 +44,13 @@ public class ConfigurationDB {
 		
 		this.sgdbr = "mysql";
 		//home
-		//this.host = "192.168.1.31";
+<<<<<<< HEAD
+		this.host = "192.168.1.23";
+=======
+		this.host = "192.168.1.35";
+>>>>>>> 73dac4ce5f9e9fb57811b56bb21c948959f4e3a0
 		//school
-		this.host = "172.16.130.90";
+		//this.host = "172.16.130.90";
 		
 		this.dbname = "FFBSQ";
 		this.user = "user_web";

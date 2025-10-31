@@ -243,7 +243,8 @@ public class VuePrincipale extends JFrame
 		else if (event.getActionCommand().equals("Quitter"))
 		{
 			// se deconnecter de la BD
-			this.controler.disconnect();
+			if(this.controler.connectionValid())
+				this.controler.disconnect();
 			dispose();
 		}
 		else if (event.getActionCommand().equals("Créer empl."))

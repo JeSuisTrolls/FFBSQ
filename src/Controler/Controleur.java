@@ -148,7 +148,7 @@ public class Controleur extends AbstractControler implements InterfOperationsVue
 	@Override
 	public Resultat deletefrom(Object obj) {
 		// TODO Auto-generated method stub
-		return null;
+		return this.monModel.deletefrom(obj);
 	}
 
 	@Override

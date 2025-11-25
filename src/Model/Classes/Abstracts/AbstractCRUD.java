@@ -319,7 +319,7 @@ public abstract class AbstractCRUD implements InterfCRUD {
 			else if (this.listTypes.get(i).toUpperCase().equals("BYTE"))
 				this.prepare.setByte((i+1), Byte.parseByte(this.listValeurs.get(i)));
 		}
-		//System.out.println(this.prepare.toString());
+		System.out.println(this.prepare.toString());
 		this.prepared = true;
 	}
 }

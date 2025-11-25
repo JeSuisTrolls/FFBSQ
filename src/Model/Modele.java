@@ -9,10 +9,7 @@ import Model.Classes.Metiers.*;
 import Model.Classes.Systeme.ConfigurationDB;
 import Model.Classes.Systeme.Option;
 import Model.Classes.Systeme.Session;
-import Model.DAO.EmployeDAO;
-import Model.DAO.OptionsDAO;
-import Model.DAO.TypeEmployeDAO;
-import Model.DAO.UtilisateurDAO;
+import Model.DAO.*;
 import Model.Interfaces.Observer.InterfObservateur;
 
 
@@ -164,8 +161,8 @@ public class Modele extends AbstractModel {
 
 	@Override
 	public Resultat deletefrom(Object obj) {
-		// TODO Auto-generated method stub
-			return null;
+		this.setManagerDAOCorresponds(obj);
+		return this.managerDAO.deletefrom(obj);
 	}
 
 	@Override
@@ -194,6 +191,12 @@ public class Modele extends AbstractModel {
 			this.managerDAO = new OptionsDAO(this.session.getConnDBSession());
 		else if (obj instanceof TypeEmploye)
 			this.managerDAO = new TypeEmployeDAO(this.session.getConnDBSession());
+		else if (obj instanceof Discipline)
+			this.managerDAO = new DisciplineDAO(this.session.getConnDBSession());
+		else if (obj instanceof Club)
+			this.managerDAO = new ClubDAO(this.session.getConnDBSession());
+		else if (obj instanceof LigueRegionale)
+			this.managerDAO = new LigueRegionaleDAO(this.session.getConnDBSession());
 
 	}
 

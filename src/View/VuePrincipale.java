@@ -12,12 +12,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import Controler.Controleur;
-import Controler.Abstracts.AbstractControler;
 import Model.Classes.Systeme.Session;
 import Model.Interfaces.Observer.InterfObservateur;
 import View.ADMIN.VueCreerEmploye;
 import View.ADMIN.VueListerEmploye;
-import View.Abstracts.AbstractVuePersonnalisable;
+import View.COMPETITION.VueCreerCompetition;
 
 /*
  * Vue principal qui contient un menu et un controler.
@@ -260,6 +259,13 @@ public class VuePrincipale extends JFrame
 			new VueListerEmploye(null,
 					new Dimension(900, 400),
 					"Lister employés (Mise à jour et suppression)",
+					true,
+					this.controler);
+		}
+		else if (event.getActionCommand().equals("Créer CP.")){
+			new VueCreerCompetition(null,
+					new Dimension(300, 230),
+					"Création d'une compétition",
 					true,
 					this.controler);
 		}

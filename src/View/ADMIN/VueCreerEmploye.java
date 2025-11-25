@@ -16,6 +16,7 @@ import View.VueMessage;
 
 import static java.awt.Color.BLUE;
 import static java.awt.Color.RED;
+import static javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS;
 
 /*
  * Interface qui prend en charge la création de compte pour les employes.
@@ -204,6 +205,16 @@ public void initComponents() {
                 new VueMessage(null, new Dimension(320, 80), "Erreur", "Les mots de passes ne sont pas identiques", RED, true);
                 return;
             }
+            // verification si nss possède uniquement des chiffres
+            if(!(nss.matches("\\d+"))){
+                new VueMessage(null, new Dimension(320, 80), "Erreur", "Le nss doit posséder uniquement des nombres de 0 à 9", RED, true);
+                return;
+            }
+            // verification si tel possède uniquement des chiffres
+            if(!(tel.matches("\\d+"))){
+                new VueMessage(null, new Dimension(320, 80), "Erreur", "Le tel doit posséder uniquement des nombres de 0 à 9", RED, true);
+                return;
+            }
             // création de l'utilisateur
             Resultat resultatUtilisateur = this.controler.insertinto(new Utilisateur(nss, nom, prenom, pseudo, mdp, tel, mail));
             // verification si la requête a fonctionné
@@ -220,6 +231,7 @@ public void initComponents() {
                         "Information",
                         JOptionPane.INFORMATION_MESSAGE);
                 // reset des champs
+                // vider tout les JTF (saisi du formulaire)
                 this.jtf_id_utilisateur.setText("");
                 this.jtf_nom_utilisateur.setText("");
                 this.jtf_prenom_utilisateur.setText("");
@@ -228,7 +240,6 @@ public void initComponents() {
                 this.jpf_mdp_confirmation_utilisateur.setText("");
                 this.jtf_cell_utilisateur.setText("");
                 this.jtf_mail_utilisateur.setText("");
-
             } else {
                 new VueMessage(null, new Dimension(320, 80), "Erreur", resultatEmploye.getMessage(), RED, true);
             }

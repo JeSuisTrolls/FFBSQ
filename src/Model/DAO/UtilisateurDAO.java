@@ -32,19 +32,21 @@ public class UtilisateurDAO extends AbstractCRUD
 	public Resultat insertinto(Object obj) {
 		if(obj instanceof Utilisateur) {
 
+			Utilisateur utilisateur = (Utilisateur) obj;
+
 			String requete = "INSERT INTO UTILISATEUR (id_utilisateur, nom_utilisateur, prenom_utilisateur, pseudo_utilisateur, mdp_utilisateur, tel_utilisateur, mail_utilisateur) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
 			this.setRequete(requete);
 
 			// Liste pour initialiser les champs
 			ArrayList<String> listValeurs = new ArrayList<String>();
-			listValeurs.add(((Utilisateur) obj).getNumero_securite_social_utilisateur());
-			listValeurs.add(((Utilisateur) obj).getNom_utilisateur());
-			listValeurs.add(((Utilisateur) obj).getPrenom_utilisateur());
-			listValeurs.add(((Utilisateur) obj).getPseudo_utilisateur());
-			listValeurs.add(((Utilisateur) obj).getMdp_utilisateur());
-			listValeurs.add(((Utilisateur) obj).getTel_utilisateur());
-			listValeurs.add(((Utilisateur) obj).getMail_utilisateur());
+			listValeurs.add(utilisateur.getNumero_securite_social_utilisateur());
+			listValeurs.add(utilisateur.getNom_utilisateur());
+			listValeurs.add(utilisateur.getPrenom_utilisateur());
+			listValeurs.add(utilisateur.getPseudo_utilisateur());
+			listValeurs.add(utilisateur.getMdp_utilisateur());
+			listValeurs.add(utilisateur.getTel_utilisateur());
+			listValeurs.add(utilisateur.getMail_utilisateur());
 
 			this.setListValeurs(listValeurs);
 			// Liste pour initialiser le type des champs

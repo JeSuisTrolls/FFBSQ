@@ -1,25 +1,16 @@
 package View.Abstracts;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.xml.parsers.ParserConfigurationException;
 
 import Model.Classes.Metiers.TypeEmploye;
-import Model.Classes.Metiers.Utilisateur;
-import org.xml.sax.SAXException;
 
 import Controler.Controleur;
-import Model.Classes.Autres.XML_POJO;
 
 
 /*
@@ -28,7 +19,7 @@ import Model.Classes.Autres.XML_POJO;
 
 public abstract class AbstractVuePersonnalisable extends JDialog  
 												 implements ActionListener {
-	
+
 	// Dimension de la fenetre
 	protected Dimension dimension = new Dimension();
 	
@@ -131,12 +122,13 @@ public abstract class AbstractVuePersonnalisable extends JDialog
 			} 
 			catch (SQLException e) 
 			{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return false;
 			}
 		}
 	}
+
+	// setValuesJl
 	
 	protected void setValuesJCB(ResultSet source, 
 			                JComboBox destination, 
@@ -186,5 +178,5 @@ public abstract class AbstractVuePersonnalisable extends JDialog
 	 *  et seront initialisées dans l'implementation
 	 *  de cette méthode
 	 */
-	public abstract void initComponents();
+	protected abstract void initComponents();
 }

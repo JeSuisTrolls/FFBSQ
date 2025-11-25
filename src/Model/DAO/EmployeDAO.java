@@ -3,7 +3,6 @@ package Model.DAO;
 import Model.Classes.Abstracts.AbstractCRUD;
 import Model.Classes.Metiers.Employe;
 import Model.Classes.Metiers.Resultat;
-import Model.Classes.Metiers.TypeEmploye;
 import Model.Classes.Metiers.Utilisateur;
 import Model.Classes.Systeme.ConnectionDB;
 import Model.Interfaces.InterfOperationsAdmin;
@@ -24,14 +23,15 @@ public class EmployeDAO extends AbstractCRUD
 
     @Override
     public Resultat insertinto(Object obj) {
-        if(obj instanceof Employe) {
+        if(obj instanceof Employe employe) {
+
             String requete = "INSERT INTO EMPLOYE (id_employe, id_type_employe) VALUES (?, ?)";
             this.setRequete(requete);
 
             // Préparation des valeurs pour la requête
             ArrayList<String> listValeurs = new ArrayList<String>();
-            listValeurs.add(((Employe) obj).getNumero_securite_social_utilisateur());
-            listValeurs.add(((Employe) obj).getId_type_employe());
+            listValeurs.add(employe.getNumero_securite_social_utilisateur());
+            listValeurs.add(employe.getId_type_employe());
 
             ArrayList<String> listTypes = new ArrayList<>();
             listTypes.add("STRING");
@@ -50,13 +50,13 @@ public class EmployeDAO extends AbstractCRUD
 
     @Override
     public Resultat deletefrom(Object obj) {
-        if(obj instanceof Employe) {
+        if(obj instanceof Employe employe) {
             // D'abord supprimer de la table EMPLOYE
             String requete = "DELETE FROM EMPLOYE WHERE id_employe = ?";
             this.setRequete(requete);
 
             ArrayList<String> listValeurs = new ArrayList<String>();
-            listValeurs.add(((Employe) obj).getNumero_securite_social_utilisateur());
+            listValeurs.add(employe.getNumero_securite_social_utilisateur());
 
             ArrayList<String> listTypes = new ArrayList<>();
             listTypes.add("STRING");

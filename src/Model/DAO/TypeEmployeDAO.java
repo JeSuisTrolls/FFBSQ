@@ -1,19 +1,14 @@
 package Model.DAO;
 
 import Model.Classes.Abstracts.AbstractCRUD;
-import Model.Classes.Metiers.Employe;
 import Model.Classes.Metiers.Resultat;
 import Model.Classes.Metiers.TypeEmploye;
 import Model.Classes.Metiers.Utilisateur;
 import Model.Classes.Systeme.ConnectionDB;
 import Model.Interfaces.InterfOperationsAdmin;
-import View.VueMessage;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.awt.Color.RED;
 
 public class TypeEmployeDAO extends AbstractCRUD
         implements InterfOperationsAdmin {

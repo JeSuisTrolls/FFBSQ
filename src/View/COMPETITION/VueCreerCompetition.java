@@ -3,18 +3,17 @@ package View.COMPETITION;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import Controler.Controleur;
-import Model.Classes.Metiers.Resultat;
+import Model.Classes.Autres.DateChecker;
+import Model.Classes.Metiers.*;
 import View.Abstracts.AbstractVuePersonnalisable;
+import View.VueMessage;
+
+import static java.awt.Color.BLUE;
+import static java.awt.Color.RED;
 
 public class VueCreerCompetition extends AbstractVuePersonnalisable {
 
@@ -60,14 +59,7 @@ public class VueCreerCompetition extends AbstractVuePersonnalisable {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
     public void initComponents() {
-        // TODO Auto-generated method stub
         this.jlbl_libelle_competition = new JLabel("Nom comp. : ");
         this.jlbl_club = new JLabel("Club : ");
         this.jlbl_discipline = new JLabel("Discipline : ");
@@ -77,15 +69,52 @@ public class VueCreerCompetition extends AbstractVuePersonnalisable {
         this.jlbl_tarif = new JLabel("Tarif : ");
 
         this.jtf_libelle_competition = new JTextField();
-        this.jtf_libelle_competition.setPreferredSize(new Dimension(200, 30));
+        this.jtf_libelle_competition.setPreferredSize(new Dimension(230, 30));
         this.jcb_club = new JComboBox<String>();
+        this.jcb_club.setPreferredSize(new Dimension(230, 30));
         this.jcb_discipline = new JComboBox<String>();
+        this.jcb_discipline.setPreferredSize(new Dimension(230, 30));
         this.jcb_centre_bowling = new JComboBox<String>();;
+        this.jcb_centre_bowling.setPreferredSize(new Dimension(230, 30));
         this.jcb_categorie = new JComboBox<String>();;
+        this.jcb_categorie.setPreferredSize(new Dimension(230, 30));
         this.jtf_date_competition = new JTextField();
-        this.jtf_date_competition.setPreferredSize(new Dimension(200, 30));
+        this.jtf_date_competition.setPreferredSize(new Dimension(230, 30));
         this.jtf_tarif = new JTextField("100");
-        this.jtf_tarif.setPreferredSize(new Dimension(200, 30));
+        this.jtf_tarif.setPreferredSize(new Dimension(230, 30));
+
+        Resultat resultatCategorie = this.controler.select(new Categorie());
+        if(resultatCategorie.isSucces()) {
+            this.setValuesJCB(resultatCategorie.getReponse(), this.jcb_categorie, new Categorie());
+        } else {
+            new VueMessage(null, new Dimension(320, 80), "Erreur", "Soucis pendant la récupération des catégorie.", BLUE, true);
+            return;
+        }
+
+        Resultat resultatClub = this.controler.select(new Club());
+        if(resultatClub.isSucces()) {
+            this.setValuesJCB(resultatClub.getReponse(), this.jcb_club, new Club());
+        } else {
+            new VueMessage(null, new Dimension(320, 80), "Erreur", "Soucis pendant la récupération des clubs.", BLUE, true);
+            return;
+        }
+
+        Resultat resultatDiscipline = this.controler.select(new Discipline());
+        if(resultatDiscipline.isSucces()) {
+            this.setValuesJCB(resultatDiscipline.getReponse(), this.jcb_discipline, new Discipline());
+
+        } else {
+            new VueMessage(null, new Dimension(320, 80), "Erreur", "Soucis pendant la récupération des disciplines.", BLUE, true);
+            return;
+        }
+
+        Resultat resultatCentreBowling = this.controler.select(new CentreBowling());
+        if(resultatCentreBowling.isSucces()) {
+            this.setValuesJCB(resultatCentreBowling.getReponse(), this.jcb_centre_bowling, new CentreBowling());
+        } else {
+            new VueMessage(null, new Dimension(320, 80), "Erreur", "Soucis pendant la récupération des centres bowling.", BLUE, true);
+            return;
+        }
 
         this.jbtn_annuler = new JButton("Annuler");
         this.jbtn_creer = new JButton("Créer");
@@ -110,12 +139,7 @@ public class VueCreerCompetition extends AbstractVuePersonnalisable {
         this.jp.add(this.jbtn_annuler);
         this.jp.add(this.jbtn_creer);
 
-        this.jbtn_annuler.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent arg0)
-            {
-                dispose();
-            }
-        });
+        this.jbtn_annuler.addActionListener(this);
         this.jbtn_creer.addActionListener(this);
 
         this.setButtonSubmit(jbtn_creer);
@@ -123,4 +147,59 @@ public class VueCreerCompetition extends AbstractVuePersonnalisable {
         this.getContentPane().add(this.jp, BorderLayout.CENTER);
     }
 
+    @Override
+    public void actionPerformed(ActionEvent event) {
+        /*
+         * Si la source de l'evenement est le
+         * bouton btn_enter
+         */
+        if (event.getSource().equals(this.jbtn_annuler)) {
+            dispose();
+            return;
+        }
+
+        String libelleCompetition = jtf_libelle_competition.getText();
+        Categorie categorie = (Categorie) jcb_categorie.getSelectedItem();
+        Club club = (Club) jcb_club.getSelectedItem();
+        CentreBowling centreBowling = (CentreBowling) jcb_centre_bowling.getSelectedItem();
+        Discipline discipline = (Discipline) jcb_discipline.getSelectedItem();
+        Competition competition = new Competition();
+
+        String date = jtf_date_competition.getText();
+        // On demande au controleur si la connexion a la BD a été faite avec succès
+        if (this.controler.connectionValid()) {
+            // verification des divers champs si valide ou non null
+            if (libelleCompetition.isEmpty() || date.isEmpty()) {
+
+                new VueMessage(null, new Dimension(320, 80), "Erreur", "Veuillez remplir tous les champs.", RED, true);
+                return;
+            }
+
+            // verification si NSS est des chiffres
+
+            if (!DateChecker.isValid(date)) {
+
+                new VueMessage(null, new Dimension(320, 80), "Erreur", "Veuillez donner une date avec le format yyyy-MM-dd.", RED, true);
+                return;
+            }
+
+
+            // création de la competition (sans tarif)
+            Resultat resultatCompetition = this.controler.insertinto(new Competition(libelleCompetition, discipline.getId_discipline(), club.getId_club(), categorie.getId_categorie(), centreBowling.getId_centre_bowling() ,date));
+            // verification si la requête a fonctionné
+            if(resultatCompetition.isSucces()) {
+
+                JOptionPane.showMessageDialog(this, "Création de l'utilisateur avec succès",
+                        "Information",
+                        JOptionPane.INFORMATION_MESSAGE);
+                // reset des champs
+                // vider tout les JTF (saisi du formulaire)
+                this.jtf_date_competition.setText("");
+                this.jtf_libelle_competition.setText("");
+            } else {
+                new VueMessage(null, new Dimension(320, 80), "Erreur", resultatCompetition.getMessage(), RED, true);
+            }
+
+        }
+    }
 }

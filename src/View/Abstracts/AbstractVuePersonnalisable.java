@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-import Model.Classes.Metiers.TypeEmploye;
+import Model.Classes.Metiers.*;
 
 import Controler.Controleur;
 
@@ -149,10 +149,15 @@ public abstract class AbstractVuePersonnalisable extends JDialog
 			{
 				if (classeMetier instanceof TypeEmploye)
 					list.add(new TypeEmploye(source.getString("id_type_employe"),source.getString("libelle_type_employe")));
-				/*
-				else if (classeMetier instanceof Utilisateur)
-					list.add(new Utilisateur(source.getString("nom"),
-							                 source.getString("prenom")));*/
+
+				else if (classeMetier instanceof Categorie)
+					list.add(new Categorie(source.getString("id_categorie"), source.getString("libelle_categorie")));
+				else if (classeMetier instanceof Discipline)
+					list.add(new Discipline(source.getString("id_discipline"), source.getString("libelle_discipline")));
+				else if (classeMetier instanceof Club)
+					list.add(new Club(source.getString("id_club"), source.getString("libelle_club")));
+				else if (classeMetier instanceof CentreBowling)
+					list.add(new CentreBowling(source.getString("id_centre_bowling"), source.getString("libelle_centre_bowling")));
 			}
 				
 		} catch (SQLException e) {
@@ -166,6 +171,15 @@ public abstract class AbstractVuePersonnalisable extends JDialog
 		{
 			if (classeMetier instanceof TypeEmploye)
 				destination.addItem( ((TypeEmploye) list.get(i)));
+			else if (classeMetier instanceof Categorie)
+				destination.addItem( ((Categorie) list.get(i)));
+			else if (classeMetier instanceof Discipline)
+				destination.addItem( ((Discipline) list.get(i)));
+			else if (classeMetier instanceof Club)
+				destination.addItem( ((Club) list.get(i)));
+			else if (classeMetier instanceof CentreBowling)
+				destination.addItem( ((CentreBowling) list.get(i)));
+
 			/*else if (classeMetier instanceof Utilisateur)
 				destination.addItem( ((Utilisateur) list.get(i)).getNom() + ", " + ((Utilisateur) list.get(i)).getPrenom() );*/
 		}

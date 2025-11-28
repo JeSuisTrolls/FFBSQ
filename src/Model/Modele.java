@@ -182,8 +182,8 @@ public class Modele extends AbstractModel {
 		return new Resultat("Type d'objet inconnu", false, null);
 	}
 	
-	private void setManagerDAOCorresponds(Object obj)
-	{   if (obj instanceof Employe)
+	private void setManagerDAOCorresponds(Object obj) {
+		if (obj instanceof Employe)
 			this.managerDAO = new EmployeDAO(this.session.getConnDBSession());
 		else if (obj instanceof Utilisateur)
 			this.managerDAO = new UtilisateurDAO(this.session.getConnDBSession());
@@ -197,6 +197,12 @@ public class Modele extends AbstractModel {
 			this.managerDAO = new ClubDAO(this.session.getConnDBSession());
 		else if (obj instanceof LigueRegionale)
 			this.managerDAO = new LigueRegionaleDAO(this.session.getConnDBSession());
+		else if (obj instanceof Categorie)
+			this.managerDAO = new CategorieDAO(this.session.getConnDBSession());
+		else if (obj instanceof CentreBowling)
+			this.managerDAO = new CentreBowlingDAO(this.session.getConnDBSession());
+		else if (obj instanceof Competition)
+			this.managerDAO = new CompetitionDAO(this.session.getConnDBSession());
 
 	}
 

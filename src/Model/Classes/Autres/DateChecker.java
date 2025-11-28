@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class DateChecker {
 	public static boolean isValid(String strdate) {
-		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		format.setLenient(false);
 		try
 		{
@@ -23,5 +23,6 @@ public class DateChecker {
 		}
 		// Renvoie true si la date est valide
 		return true;
-    }
+
+	}
 }

@@ -1,21 +1,22 @@
 package Model.DAO;
 
 import Model.Classes.Abstracts.AbstractCRUD;
-import Model.Classes.Metiers.*;
+import Model.Classes.Metiers.CentreBowling;
+import Model.Classes.Metiers.Resultat;
+import Model.Classes.Metiers.Utilisateur;
 import Model.Classes.Systeme.ConnectionDB;
 import Model.Interfaces.InterfOperationsAdmin;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClubDAO extends AbstractCRUD
+public class CentreBowlingDAO extends AbstractCRUD
         implements InterfOperationsAdmin {
-
-    public ClubDAO(ConnectionDB conn_db, String requete, ArrayList<String> listValeurs, ArrayList<String> listTypes) {
+    public CentreBowlingDAO(ConnectionDB conn_db, String requete, ArrayList<String> listValeurs, ArrayList<String> listTypes) {
         super(conn_db, requete, listValeurs, listTypes);
     }
 
-    public ClubDAO(ConnectionDB conn_db) {
+    public CentreBowlingDAO(ConnectionDB conn_db) {
         super(conn_db);
     }
 
@@ -23,7 +24,6 @@ public class ClubDAO extends AbstractCRUD
     public Resultat insertinto(Object obj) {
         return null;
     }
-
 
     @Override
     public Resultat deletefrom(Object obj) {
@@ -37,9 +37,9 @@ public class ClubDAO extends AbstractCRUD
 
     @Override
     public Resultat select(Object obj) {
-        if(obj instanceof Club) {
+        if(obj instanceof CentreBowling) {
 
-            String requete = "select id_club, libelle_club from CLUB";
+            String requete = "select * from CENTRE_BOWLING";
             this.setRequete(requete);
 
             this.prepare();
@@ -49,6 +49,7 @@ public class ClubDAO extends AbstractCRUD
 
         return new Resultat("Mauvais type objet", false, null);
     }
+
 
     @Override
     public Resultat selectAll(Object obj) {

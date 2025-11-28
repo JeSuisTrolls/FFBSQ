@@ -264,7 +264,7 @@ public class VuePrincipale extends JFrame
 		}
 		else if (event.getActionCommand().equals("Créer CP.")){
 			new VueCreerCompetition(null,
-					new Dimension(300, 230),
+					new Dimension(300, 400),
 					"Création d'une compétition",
 					true,
 					this.controler);

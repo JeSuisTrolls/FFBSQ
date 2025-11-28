@@ -1,8 +1,11 @@
 package Model.Classes.Abstracts;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -318,8 +321,10 @@ public abstract class AbstractCRUD implements InterfCRUD {
 				this.prepare.setBoolean((i+1), Boolean.parseBoolean(this.listValeurs.get(i)));
 			else if (this.listTypes.get(i).toUpperCase().equals("BYTE"))
 				this.prepare.setByte((i+1), Byte.parseByte(this.listValeurs.get(i)));
+			else if (this.listTypes.get(i).toUpperCase().equals("DATE"))
+				this.prepare.setDate((i+1), java.sql.Date.valueOf(this.listValeurs.get(i)));
 		}
-		System.out.println(this.prepare.toString());
+		//System.out.println(this.prepare.toString());
 		this.prepared = true;
 	}
 }
